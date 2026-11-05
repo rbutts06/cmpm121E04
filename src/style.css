@@ -4,7 +4,11 @@
   box-sizing: border-box;
 }
 :root {
-  --main-accent: rgb(94, 242, 255); /*aka #5ef2ff*/
+  --panel-shadow: rgba(94, 242, 255, 0.35);
+  --panel-glow: rgba(94, 242, 255, 0.15);
+  --panel-inner: rgba(94, 242, 255, 0.08);
+
+  --main-accent: #5ef2ff;
   --yellow-accent: #ffe066;
   --light-blue: #e8fdff;
   --warden-color: #ff4d6d;
@@ -51,11 +55,10 @@ body {
   display: grid;
   gap: var(--gap);
   padding: var(--padding);
-  border: 1px solid rgba(var(--main-accent), 0.35);
-  border-radius: var(--corner-radius);
-  background: rgba(var(--panel-bg), 0.86);
-  box-shadow: 0 0 24px rgba(var(--main-accent), 0.15), inset 0 0 18px
-    rgba(var(--main-accent), 0.08);
+  border: 1px solid var(--panel-shadow);
+  border-radius: 10px;
+  background: rgba(14, 10, 34, 0.86);
+  box-shadow: 0 0 24px var(--panel-glow), inset 0 0 18px var(--panel-inner);
   transition: opacity 400ms, transform 400ms;
 }
 
@@ -67,7 +70,7 @@ body {
 
 .panel-right {
   transform-origin: left center;
-  transform: translateX(-1 * var(--overlap)) rotateY(calc(-1 *
+  transform: translateX(calc(-1 * var(--overlap))) rotateY(calc(-1 *
     var(--tilt)));
 }
 
@@ -127,6 +130,17 @@ output {
   background: currentColor;
 }
 
+#lives .pip {
+  width: 22px;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  background: currentColor;
+}
+
+#power .cell {
+  flex: 1;
+  border-radius: 2px;
+}
+
 .badge {
   display: none;
   margin: 0;
@@ -151,9 +165,8 @@ output {
   height: 640px;
   border-radius: var(--corner-radius);
   overflow: hidden;
-  box-shadow: 0 0 0 2px rgba(var(--main-accent), 0.35), 0 0 40px
-    rgba(var(--main-accent),
-    0.2);
+  box-shadow: 0 0 0 2px var(--panel-shadow), 0 0 40px
+    rgba(94, 242, 255, 0.2);
 }
 
 #game,
@@ -181,6 +194,13 @@ output {
 
 .stop[data-state="cleared"] {
   color: var(--main-accent);
+}
+
+.stop-dot {
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
 }
 
 .stop[data-state="cleared"] .stop-dot {
