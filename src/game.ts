@@ -7,7 +7,13 @@ import {
   Player,
   WIDTH,
 } from "./actors.ts";
-import { ShmupBoss, ShmupPowerUp, ShmupPrefabSprite } from "./prefab.ts";
+import {
+  Enemy,
+  ENEMY_STATS,
+  type EnemyType,
+  ShmupBoss,
+  ShmupPowerUp,
+} from "./actors.ts";
 import type { Hud } from "./hud.ts";
 import type { LaunchOptions } from "./main.ts";
 import { AutoPilot, KeyboardPilot, type Pilot } from "./pilots.ts";
@@ -15,14 +21,7 @@ import { Rng } from "./rng.ts";
 import { loadSounds, play } from "./sounds.ts";
 import { makeTextures, TINTS } from "./textures.ts";
 import { Backdrop } from "./backdrop.ts";
-import {
-  ENEMY_STATS,
-  type EnemyType,
-  grace_ticks,
-  Route_names,
-  Sectors,
-  spawnAt,
-} from "./route.ts";
+import { grace_ticks, Route_names, Sectors, spawnAt } from "./route.ts";
 
 const TICK_MS = 1000 / 60;
 const START_LIVES = 3;
@@ -60,7 +59,7 @@ export class GameScene extends Phaser.Scene implements Arena {
   private run;
   private pilot!: Pilot;
   private backdrop!: Backdrop;
-  private enemies: ShmupPrefabSprite[] = [];
+  private enemies: Enemy[] = [];
   private shots: Bullet[] = [];
   private bullets: Bullet[] = [];
   private pickups: ShmupPowerUp[] = [];
@@ -334,7 +333,7 @@ export class GameScene extends Phaser.Scene implements Arena {
   private spawn({ type, x, y, side }: SpawnOrder): void {
     const stats = ENEMY_STATS[type];
     console.log(stats.hp);
-    this.enemies.push(new ShmupPrefabSprite(this, x, y, type, stats, x, side));
+    this.enemies.push(new Enemy(this, x, y, type, stats, x, side));
   }
 
   // one tick of gameplay
@@ -466,7 +465,7 @@ export class GameScene extends Phaser.Scene implements Arena {
     }
   }
 
-  private destroyEnemy(enemy: ShmupPrefabSprite): void {
+  private destroyEnemy(enemy: Enemy): void {
     enemy.setActive(false);
     this.run.score += enemy.stats.score;
     this.run.kills++;
