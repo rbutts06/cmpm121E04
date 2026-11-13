@@ -6,13 +6,42 @@ export interface EnemyStats {
   radius: number;
   dropChance: number;
   canShoot: boolean;
+  isPickup: boolean;
 }
 
 export const ENEMY_STATS: Record<EnemyType, EnemyStats> = {
-  drone: { hp: 2, score: 100, radius: 13, dropChance: 0.015, canShoot: true },
-  dart: { hp: 1, score: 150, radius: 12, dropChance: 0.015, canShoot: false },
-  turret: { hp: 12, score: 400, radius: 19, dropChance: 0.3, canShoot: true },
-  lancer: { hp: 4, score: 250, radius: 15, dropChance: 0.06, canShoot: true },
+  drone: {
+    hp: 2,
+    score: 100,
+    radius: 13,
+    dropChance: 0.015,
+    canShoot: true,
+    isPickup: false,
+  },
+  dart: {
+    hp: 1,
+    score: 150,
+    radius: 12,
+    dropChance: 0.015,
+    canShoot: false,
+    isPickup: false,
+  },
+  turret: {
+    hp: 12,
+    score: 400,
+    radius: 19,
+    dropChance: 0.3,
+    canShoot: true,
+    isPickup: false,
+  },
+  lancer: {
+    hp: 4,
+    score: 250,
+    radius: 15,
+    dropChance: 0.06,
+    canShoot: true,
+    isPickup: false,
+  },
 };
 
 export type Formation = "line" | "vee" | "column" | "pincer";
@@ -101,7 +130,7 @@ export const Sectors: Sector[] = [{
   ],
 }];
 
-export const boss_stop = "The Wardern";
+export const boss_stop = "The Warden";
 
 export const Route_names: readonly string[] = [
   ...Sectors.map((sector) => sector.name),
