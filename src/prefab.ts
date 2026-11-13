@@ -25,6 +25,7 @@ export class ShmupPrefabSprite extends Actor {
   // spin: turrets rotate using this
   spin = 0;
   stats: Stats;
+  hp: number;
 
   constructor(
     scene: Phaser.Scene,
@@ -37,6 +38,7 @@ export class ShmupPrefabSprite extends Actor {
   ) {
     super(scene, x, y, kind, stats_read.radius);
     this.stats = stats_read;
+    this.hp = this.stats.hp;
     this.maxHp = this.stats.hp;
   }
 
@@ -106,7 +108,7 @@ export class ShmupPrefabSprite extends Actor {
   }
 
   get fraction(): number {
-    return this.stats.hp / this.maxHp;
+    return this.hp / this.maxHp;
   }
 
   phase(): number {
@@ -116,9 +118,9 @@ export class ShmupPrefabSprite extends Actor {
   /** Returns true when this hit destroys the prefab. */
   takeDamage(amount: number): boolean {
     if (this.stats.isPickup) return false;
-    this.stats.hp -= amount;
+    this.hp -= amount;
     this.flash = 3;
-    return this.stats.hp <= 0;
+    return this.hp <= 0;
   }
 }
 
